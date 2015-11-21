@@ -5,6 +5,9 @@ var routes = require('./app/routes/index.js');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var session = require('express-session');
+var fs = require('fs');
+var path = require('path');
+var bodyParser = require('body-parser');
 
 var app = express();
 require('dotenv').load();
@@ -15,6 +18,9 @@ mongoose.connect(process.env.MONGO_URI);
 app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use('/common', express.static(process.cwd() + '/app/common'));
+app.use('/', express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(session({
 	secret: 'secretClementine',

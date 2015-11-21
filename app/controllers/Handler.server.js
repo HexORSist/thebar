@@ -1,13 +1,23 @@
 'use strict';
 
-var Users = require('../models/users.js');
+var Users = require('../models/users.model.js');
 var path = process.cwd();
 var COMMENTS_FILE = path + '/comments.json';
 var fs = require('fs');
 
 function Handler () {
 	
+	this.putLocation=function(req,res){
+		console.log(req.body);
+		Users.findOneAndUpdate({ 'github.id': req.user.github.id },function(err,data){
+			if (err) { throw err; }
+				
+			}
+		);
+	}
+	
 	this.getComments=function(req,res){
+		//console.log(req.user.github.id);
 		fs.readFile(COMMENTS_FILE, function(err, data) {
 		    if (err) {
 		      console.error(err);

@@ -21,6 +21,8 @@ body {
 	font-size: 16px;
 	margin: 0;
 	padding: 0;
+	background: cyan;
+	text-align: center;
 }
 
 header {
@@ -32,6 +34,11 @@ header {
 
 p {
 	margin: 8px 0 0 0;
+}
+
+.container {
+	text-align: center;
+	padding: 0;
 }
 
 .container p {
@@ -201,4 +208,9 @@ span {
 	color: #FFFFFF;
 	display: inline;
 	margin: 0;
+}
+
+.commentBox {
+	color: #FF630D;
+	border: solid black;
 }

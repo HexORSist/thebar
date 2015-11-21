@@ -52,9 +52,11 @@ module.exports = function (app, passport) {
 			failureRedirect: '/login'
 		}));
 		
-	app.route('/comments')
+	app.route('/api/:id/comments')
 		.get(isLoggedIn, Handler.getComments)
-			
 		.post(isLoggedIn, Handler.postComments);
+		
+	app.route('/api/:id/location')
+		.post(isLoggedIn, Handler.putLocation);
 		
 };

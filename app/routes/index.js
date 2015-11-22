@@ -57,6 +57,7 @@ module.exports = function (app, passport) {
 		.post(isLoggedIn, Handler.postComments);
 		
 	app.route('/api/:id/location')
-		.post(isLoggedIn, Handler.putLocation);
+		.post(isLoggedIn, Handler.putLocation)
+		.get(isLoggedIn, Handler.getLocation);
 		
 };

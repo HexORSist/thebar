@@ -4,6 +4,7 @@
 var path = process.cwd();
 //var path = require('path');
 var handler = require(path + '/app/controllers/Handler.server.js');
+var barhandler = require(path + '/app/controllers/bar.server.js');
 
 module.exports = function (app, passport) {
 
@@ -16,6 +17,7 @@ module.exports = function (app, passport) {
 	}
 
 	var Handler = new handler();
+	var BarHandler = new barhandler();
 
 	app.route('/')
 		.get(isLoggedIn, function (req, res) {
@@ -59,5 +61,9 @@ module.exports = function (app, passport) {
 	app.route('/api/:id/location')
 		.post(isLoggedIn, Handler.putLocation)
 		.get(isLoggedIn, Handler.getLocation);
+		
+	app.route('/api/:id/bars/start/')
+		.get(isLoggedIn, BarHandler.barStart);
+
 		
 };

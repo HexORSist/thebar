@@ -4,12 +4,12 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var BarSchema = new Schema({
-  name: String,
+  //name: String,
   url: String,
-  image_url: String,
-  snippet: String,
+  //image_url: String,
+  //snippet: String,
   attending: Array,
-  active: Boolean
+  //active: Boolean
 });
 
 module.exports = mongoose.model('Bar', BarSchema);

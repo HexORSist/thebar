@@ -210,7 +210,53 @@ span {
 	margin: 0;
 }
 
+.menu-header h1{
+	color: orange;
+}
+
 .commentBox {
 	color: #FF630D;
 	border: solid black;
+}
+
+.BarListItem {
+	text-align: left;
+	color: blue;
+	border: solid black;
+	padding: 5px;
+	width: 500px;
+	height: 100px;
+	margin: 40px auto;
+	border-radius: 5px;
+	font-size: 15px;
+	position: relative
+}
+
+.BarListItem img{
+	float: left;
+	margin-right: 10px;
+	border-radius: 5px;
+	/*height: 120px;
+	display: inline-block;*/
+}
+
+.Attending{
+	
+	border-radius: 5px;
+	background: white;
+	width: 30px;
+	/*margin: 5px;
+	float: left;*/
+	bottom:0;
+	text-align: center;
+	border: solid black;
+	position: absolute;
+	
+	/*height: 20px;
+	display: inline-block;*/
+}
+
+.Attending:hover{
+	cursor:pointer;
+	border: solid gray;
 }

@@ -7,6 +7,24 @@ var path = process.cwd();
 
 function barHandler () {
 	
+	this.barAttend=function(req,res){
+		//var found = false;
+		//console.log(req.body)
+		Bars.findOne({url:req.body.url},function(err,data){
+			if (err) { throw err; }
+			var idx = data.attending.indexOf(req.user.github.id.toString())
+			console.log(idx)
+			if(idx!=-1){
+				data.attending.splice(idx,1);
+				
+			} else {
+				data.attending.push(req.user.github.id);
+				//data.save();
+			}
+			data.save();
+		})
+	}
+	
 	this.barStart=function(req,res){
 		
 		var yelp = new yelpnode({

@@ -64,6 +64,10 @@ module.exports = function (app, passport) {
 		
 	app.route('/api/:id/bars/start/')
 		.get(isLoggedIn, BarHandler.barStart);
+		
+	app.route('/api/:id/bars/attend/')
+		.post(isLoggedIn, BarHandler.barAttend);
+
 
 		
 };

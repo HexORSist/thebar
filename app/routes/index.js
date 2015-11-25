@@ -54,10 +54,6 @@ module.exports = function (app, passport) {
 			failureRedirect: '/login'
 		}));
 		
-	app.route('/api/:id/comments')
-		.get(isLoggedIn, Handler.getComments)
-		.post(isLoggedIn, Handler.postComments);
-		
 	app.route('/api/:id/location')
 		.post(isLoggedIn, Handler.putLocation)
 		.get(isLoggedIn, Handler.getLocation);
@@ -67,7 +63,4 @@ module.exports = function (app, passport) {
 		
 	app.route('/api/:id/bars/attend/')
 		.post(isLoggedIn, BarHandler.barAttend);
-
-
-		
 };

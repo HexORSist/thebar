@@ -11,37 +11,28 @@
  */
 
 var TheBar = React.createClass({
-  /*rawMarkup: function() {
-    var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
-    return { __html: rawMarkup };
-  },*/
-  
-    handleAttendSubmit: function(event) {
+  getInitialState: function() {
+    return {attendcnt: []};
+  },
+  componentDidMount: function() {
+    this.setState({attendcnt: this.props.attendinit});
+    //this.getLocationFromServer();
+  },
+  handleAttendSubmit: function(event) {
+    $.ajax({
+    url: 'api/:id/bars/attend/',
+    dataType: 'json',
+    type: 'POST',
+    data: {url:this.props.url},
+    success: function(data) {
+      this.setState({attendcnt: data.attending});
+    }.bind(this),
+    error: function(xhr, status, err) {
+      console.error(this.props.url, status, err.toString());
+    }.bind(this)
+    });
     
-      $.ajax({
-      url: 'api/:id/bars/attend/',
-      dataType: 'json',
-      type: 'POST',
-      data: {url:this.props.url},
-      success: function(data) {
-        //this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        //this.setState({data: locations});
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-      });
-      
-    },
-
-  
-  /*handleClick: function(event) {
-    //alert("clicked")
-    this.props.attend.push(1)
-    this.setState(this.props.attend)
-    
-    
-  },*/
+  },
 
   render: function() {
     return (
@@ -50,10 +41,9 @@ var TheBar = React.createClass({
         <div>
           <a href={this.props.url} target='_blank'>{this.props.barName}</a><br/>
           {this.props.snippet}
-          {/*<span dangerouslySetInnerHTML={this.rawMarkup()} />*/}
           
           <p className="Attending" title='Attending?' onClick={this.handleAttendSubmit}>
-            {this.props.attend.length}
+            {this.state.attendcnt.length}
           </p>
         </div>
       </div>
@@ -86,7 +76,6 @@ var LocationBox = React.createClass({
       type: 'GET',
       cache: false,
       success: function(data) {
-        //alert(data);
         this.setState({data: data});
       }.bind(this),
       error: function(xhr, status, err) {
@@ -120,7 +109,6 @@ var LocationBox = React.createClass({
   },
   componentDidMount: function() {
     this.getLocationFromServer();
-    /*setInterval(this.loadCommentsFromServer, this.props.pollInterval);*/
   },
   render: function() {
     return (
@@ -136,7 +124,6 @@ var LocationBox = React.createClass({
 var BarList = React.createClass({
  
   render: function() {
-    //alert(this.props.data[0].snippet);
     var barNodes = this.props.data.map(function(bar) {
       return (
         <TheBar
@@ -144,7 +131,7 @@ var BarList = React.createClass({
           url={bar.url}
           image_url={bar.image_url}
           snippet={bar.snippet}
-          attend={bar.attending}
+          attendinit={bar.attending}
           key={bar.url}>
         </TheBar>
       );
@@ -181,17 +168,14 @@ var LocationForm = React.createClass({
   handleSubmit: function(e) {
     
     e.preventDefault();
-    //var text = this.state.text.trim();
     var text = this.state.text;
     if (!text) {
       return;
     }
     this.props.onLocationSubmit({text: text});
-    //this.setState({text: ''});
   },
   componentDidMount: function() {
     this.loadLocationFromServer();
-    /*setInterval(this.loadCommentsFromServer, this.props.pollInterval);*/
   },
   render: function() {
     return (
@@ -209,7 +193,6 @@ var LocationForm = React.createClass({
 });
 
 ReactDOM.render(
-  //<CommentBox url="api/:id/comments" /*pollInterval={2000}*/ />,
-  <LocationBox url="api/:id/location" /*pollInterval={2000}*/ />,
+  <LocationBox url="api/:id/location" />,
   document.getElementById('content')
 );

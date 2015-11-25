@@ -8,21 +8,21 @@ var path = process.cwd();
 function barHandler () {
 	
 	this.barAttend=function(req,res){
-		//var found = false;
-		//console.log(req.body)
+		var found = false;
 		Bars.findOne({url:req.body.url},function(err,data){
 			if (err) { throw err; }
 			var idx = data.attending.indexOf(req.user.github.id.toString())
-			console.log(idx)
 			if(idx!=-1){
 				data.attending.splice(idx,1);
+				found = true;
 				
 			} else {
 				data.attending.push(req.user.github.id);
-				//data.save();
 			}
 			data.save();
+			return res.json(data);
 		})
+		
 	}
 	
 	this.barStart=function(req,res){
@@ -33,9 +33,8 @@ function barHandler () {
 	      token: "hEqj3vGFdvISd5zTGYHsQ-ttUWLzts6O",
 	      token_secret: "_a4x-PfQVoOMV9ZLxalZSEazZHU"
 	    });
-	    //console.log(req);
 	    yelp.search({category_filter: "bars", location: req.user.location}, function(error, data) {
-	      //console.log(error);
+
 	          if(error) { return handleError(res, error); }
 	          var extBars = data.businesses.map(function(item){
 	            return {
@@ -64,7 +63,6 @@ function barHandler () {
 				}
 				
 				if(currtask<=0){
-					//console.log(extBars)
 					return res.json(extBars);
 				}
 				currtask--;
@@ -73,58 +71,12 @@ function barHandler () {
 		
 	};
 	
-	
-	/*this.getLocation=function(req,res){
-		Bars.findOne({ 'github.id': req.user.github.id },function(err,data){
-			if (err) { throw err; }
-				res.json(data.location);
-			}
-		);
-	}*/
-	
+
 	function handleError(res, err) {
 		console.log(err);
 	  return res.send(500, err);
 	}
 
 }
-
-/*function ClickHandler () {
-
-	this.getClicks = function (req, res) {
-		Users
-			.findOne({ 'github.id': req.user.github.id }, { '_id': false })
-			.exec(function (err, result) {
-				if (err) { throw err; }
-
-				res.json(result.nbrClicks);
-			});
-	};
-
-	this.addClick = function (req, res) {
-		Users
-			.findOneAndUpdate({ 'github.id': req.user.github.id }, { $inc: { 'nbrClicks.clicks': 1 } })
-			.exec(function (err, result) {
-					if (err) { throw err; }
-
-					res.json(result.nbrClicks);
-				}
-			);
-	};
-
-	this.resetClicks = function (req, res) {
-		Users
-			.findOneAndUpdate({ 'github.id': req.user.github.id }, { 'nbrClicks.clicks': 0 })
-			.exec(function (err, result) {
-					if (err) { throw err; }
-
-					res.json(result.nbrClicks);
-				}
-			);
-	};
-
-}
-
-module.exports = ClickHandler;*/
 
 module.exports = barHandler;
